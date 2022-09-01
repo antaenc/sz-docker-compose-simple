@@ -1,0 +1,16 @@
+version: '3'
+services:
+
+  senzing-redoer:
+    environment:
+#     See https://github.com/Senzing/redoer#configuration
+      SENZING_ENGINE_CONFIGURATION_JSON: ${SENZING_ENGINE_CONFIGURATION_JSON}
+      SENZING_SUBCOMMAND: redo
+    image: senzing/redoer:${SENZING_DOCKER_IMAGE_VERSION_REDOER:-latest}
+    networks:
+      - backend
+    restart: on-failure
+    user: "0"
+
+networks:
+  backend:

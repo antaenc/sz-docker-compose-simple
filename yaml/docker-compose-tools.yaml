@@ -1,0 +1,10 @@
+version: '3'
+services:
+
+  senzing-tools:
+    environment:
+      SENZING_ENGINE_CONFIGURATION_JSON: ${SENZING_ENGINE_CONFIGURATION_JSON}
+    image: senzing/senzingapi-tools:latest
+    restart: always
+    stdin_open: true
+    tty: true 

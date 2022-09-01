@@ -1,0 +1,15 @@
+version: '3'
+services:
+
+  rabbitmq:
+    hostname: rabbitmq
+    image: bitnami/rabbitmq
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    networks:
+      - backend
+    restart: always
+
+networks:
+  backend:
