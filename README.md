@@ -9,6 +9,7 @@ This stack emulates many components of one type of Senzing  architectural deploy
 - Assumes using Linux
 - Docker / Docker Compose are installed
 - Internet connection
+- Your user is a member of the docker group or you have sudo access. If you have sudo access prefix the docker/docker-compose commands with sudo. These instructions assume the user is a member of the docker group.
 
 ## Demonstration
 
@@ -33,22 +34,6 @@ Export the SENZING_ENGINE_CONFIGURATION_JSON env var on the host with the Senzin
 
 ```docker-compose -f docker-compose-tools.yaml up --detach```
 
-### RabbitMQ
-
-```docker-compose -f docker-compose-rabbit.yaml up --detach```
-
-Access the RabbitMQ console at: http://localhost:15672/ 
-
-User = user
-
-Password = bitnami
-
-### Senzing Producer
-
-```docker-compose -f docker-compose-producer.yaml up --detach```
-
-In the RabbitMQ console, under queues click into the senzing queue. You should shortly see 5000 records added to the queue.
-
 ### Senzing Loader 
 
 ```docker-compose -f docker-compose-loader.yaml up --detach --scale senzing-loader=2```
@@ -63,15 +48,9 @@ In the RabbitMQ console and the senzing queue, you should shortly see 5000 recor
 
 ```docker-compose -f docker-compose-restserver.yaml up --detach```
 
-Once running, collect the port the API REST Server is using, issue:
+Test the REST API Server by navigating to http://localhost:8250 or using curl:
 
-```docker ps -a```
-
-Look for the IMAGE named 'senzing/senzing-api-server:latest' and under the PORTS column look for a port usually in the 4915x range. 
-
-Test the REST API Server by navigating to http://localhost:<port_from_above> or using curl:
-
-```curl -X GET http://localhost:49155/specifications/open-api```
+```curl -X GET http://localhost:8250/specifications/open-api```
 
 ### Senzing Web App Demo
 
@@ -87,8 +66,8 @@ Run curl to fetch the API specification from the Senzing REST API Server, taking
 
 This step uses a utility to extract the section from the specification required for Swagger, you may have to install this, e.g., on Debian 'sudo apt install jq'.
 
-```curl -X GET http://localhost:49153/specifications/open-api -o /tmp/apispec.json```
-
-```jq '.data' < /tmp/apispec.json  > ../data/apispec_data.json```
+```curl -X GET http://localhost:8250/specifications/open-api | jq -c '.data' > ../data/rest_api_spec.json```
 
 ```docker-compose -f docker-compose-swagger.yaml up --detach```
+
+Launch the Swagger UI console at: http://localhost:9180/
