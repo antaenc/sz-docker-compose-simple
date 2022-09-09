@@ -12,20 +12,7 @@ This stack emulates many components of one type of Senzing  architectural deploy
 
 ## Demonstration
 
-This example completes and provides:
-
-1. A Postgres database for the Senzing repository
-2. The Senzing Tools container and a Python script to add a default Senzing configuration to the repository
-3. A RabbitMQ instance to populate records to load into Senzing
-4. Example Senzing 'producer' and 5k sample records to populate the queue with
-5. Example Senzing 'loader' to read the records from the queue and ingest into Senzing for entity resolution
-6. Example Senzing 'redeor' to clean up any redo records
-7. Senzing REST API Server
-8. Senzing demo web application for exploring Senzing entities
-9. Swagger UI to interact with the Senzing REST API Server
-
-
-Note, all Senzing example assets are Apache 2.0 open source licensed and can be found at: https://github.com/Senzing
+This demonstrator utilises a number of example Docker images available at https://github.com/Senzing.
 
 ## Running
 
