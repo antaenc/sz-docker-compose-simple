@@ -17,7 +17,7 @@ This demonstrator utilises a number of example Docker images available at https:
 
 ## Running
 
-Anytime localhost is referenced below it is assumed all actions are on the same machine. If you deploy the assets on one machine and use a browser to access them, change localhost to the hostname of the machine running the assets.
+When localhost is referenced below it is assumed all actions are on the same machine. If you deploy the assets on one machine and use a browser to access them, change localhost to the hostname of the machine running the assets.
 
 Run commands from within the yaml directory.
 
