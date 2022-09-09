@@ -3,12 +3,13 @@ version: '3'
 services:
   senzing-tools:
     container_name: senzing-tools
+    command: python3 sz_setup_postgres.py
     environment:
       SENZING_ENGINE_CONFIGURATION_JSON: ${SENZING_ENGINE_CONFIGURATION_JSON}
     image: senzing/senzingapi-tools:latest
     networks:
       - backend
-    restart: always
+    restart: on-failure
     stdin_open: true
     tty: true
     volumes: 

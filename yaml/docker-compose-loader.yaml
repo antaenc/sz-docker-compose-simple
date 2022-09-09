@@ -5,17 +5,17 @@ services:
     environment:
       LC_CTYPE: en_US.utf8
       SENZING_ENGINE_CONFIGURATION_JSON: ${SENZING_ENGINE_CONFIGURATION_JSON}
-      SENZING_RABBITMQ_HOST: rabbitmq
-      SENZING_RABBITMQ_PASSWORD: bitnami
-      SENZING_RABBITMQ_QUEUE: senzing
-      SENZING_RABBITMQ_USERNAME: user
-      SENZING_SUBCOMMAND: rabbitmq
+      SENZING_INPUT_URL: /loadtest-dataset-5K-with-datasource.json
+      SENZING_SUBCOMMAND: url
       SENZING_THREADS_PER_PROCESS: 64
       SENZING_SKIP_DATABASE_PERFORMANCE_TEST: 1
     image: senzing/stream-loader:latest
     networks:
       - backend
     restart: on-failure
+    volumes: 
+      - ../data/loadtest-dataset-5K-with-datasource.json:/loadtest-dataset-5K-with-datasource.json
+
 
 networks:
   backend:

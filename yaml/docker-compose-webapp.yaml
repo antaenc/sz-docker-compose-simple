@@ -4,7 +4,7 @@ services:
   senzing-webapp:
     container_name: senzing-webapp
     environment:
-      SENZING_API_SERVER_URL: ${SENZING_API_SERVER_URL:-http://senzing-rest-server:8250}
+      SENZING_API_SERVER_URL: http://senzing-rest-server:8250
       SENZING_WEB_SERVER_ADMIN_AUTH_MODE: JWT
       SENZING_WEB_SERVER_PORT: 8251
     image: senzing/entity-search-web-app:latest
