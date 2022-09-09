@@ -1,25 +1,18 @@
-version: '3.2'
-services:
+version: '3'
 
+services:
   swaggerui:
+    container_name: swaggerui
     environment:
-      # rest_api_spec_V3.3.4.json needs only the data object from the following URL, easy test is to create it and mount it in 
-      #   http://senzing-rest-server:<port>/specifications/open-api
-      # 
-      # Note: The rest api spec JSON version should match the image tag for the REST server image. If running these yaml files
-      # connected to the internet or a registry with newer versions loaded update the rest api spec JSON file to the new version:
-      #   curl -X GET http://localhost:49157/specifications/open-api | jq .data > rest_api_spec_Vx.y.z.json
-      SWAGGER_JSON: ${SWAGGER_JSON:-/rest_api_spec_V3.3.4.json}
-    image: swaggerapi/swagger-ui:${SENZING_DOCKER_IMAGE_VERSION_SWAGGERAPI_SWAGGER_UI:-latest}
+      SWAGGER_JSON: /rest_api_spec.json
+    image: swaggerapi/swagger-ui:latest
     networks:
       - backend
     ports:
       - 9180:8080
-    restart: always
+    restart: on-failure
     volumes:
-      - type: bind
-        source: ../data/rest_api_spec_V3.3.4.json
-        target: /rest_api_spec_V3.3.4.json
+      - ../data/rest_api_spec.json:/rest_api_spec.json
 
 networks:
   backend:

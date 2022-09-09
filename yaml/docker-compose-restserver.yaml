@@ -1,7 +1,8 @@
 version: '3'
-services:
 
+services:
   senzing-rest-server:
+    container_name: senzing-rest-server
     environment:
       SENZING_API_SERVER_ALLOWED_ORIGINS: '*'
       SENZING_API_SERVER_BIND_ADDR: 'all'
@@ -11,12 +12,12 @@ services:
       SENZING_API_SERVER_SKIP_ENGINE_PRIMING: 'true'
       SENZING_API_SERVER_SKIP_STARTUP_PERF: 'true'
       SENZING_ENGINE_CONFIGURATION_JSON: ${SENZING_ENGINE_CONFIGURATION_JSON}
-    image: senzing/senzing-api-server:${SENZING_DOCKER_IMAGE_VERSION_SENZING_API_SERVER:-latest}
+    image: senzing/senzing-api-server:latest
     networks:
       - backend
     ports:
       - 8250
-    restart: always
+    restart: on-failure
 
 networks:
   backend:

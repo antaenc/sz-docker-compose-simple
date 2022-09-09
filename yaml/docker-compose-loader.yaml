@@ -1,22 +1,21 @@
 version: '3'
-services:
 
+services:
   senzing-loader:
     environment:
       LC_CTYPE: en_US.utf8
-#     See https://github.com/Senzing/stream-loader#configuration
       SENZING_ENGINE_CONFIGURATION_JSON: ${SENZING_ENGINE_CONFIGURATION_JSON}
-      SENZING_RABBITMQ_HOST: ${SENZING_RABBITMQ_HOST}
-      SENZING_RABBITMQ_PASSWORD: ${SENZING_RABBITMQ_PASSWORD}
-      SENZING_RABBITMQ_QUEUE: ${SENZING_RABBITMQ_QUEUE}
-      SENZING_RABBITMQ_USERNAME: ${SENZING_RABBITMQ_USERNAME}
+      SENZING_RABBITMQ_HOST: rabbitmq
+      SENZING_RABBITMQ_PASSWORD: bitnami
+      SENZING_RABBITMQ_QUEUE: senzing
+      SENZING_RABBITMQ_USERNAME: user
       SENZING_SUBCOMMAND: rabbitmq
       SENZING_THREADS_PER_PROCESS: 64
       SENZING_SKIP_DATABASE_PERFORMANCE_TEST: 1
-    image: senzing/stream-loader:${SENZING_DOCKER_IMAGE_VERSION_STREAM_LOADER:-latest}
+    image: senzing/stream-loader:latest
     networks:
       - backend
-    restart: always
+    restart: on-failure
 
 networks:
   backend:

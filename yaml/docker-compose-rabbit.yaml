@@ -1,6 +1,6 @@
 version: '3.2'
-services:
 
+services:
   rabbitmq:
     container_name: rabbitmq
     hostname: rabbitmq
@@ -10,7 +10,7 @@ services:
       - '15672:15672'
     networks:
       - backend
-    restart: always
+    restart: on-failure
 
 networks:
   backend:

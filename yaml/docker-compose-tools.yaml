@@ -1,10 +1,18 @@
 version: '3'
-services:
 
+services:
   senzing-tools:
+    container_name: senzing-tools
     environment:
       SENZING_ENGINE_CONFIGURATION_JSON: ${SENZING_ENGINE_CONFIGURATION_JSON}
     image: senzing/senzingapi-tools:latest
+    networks:
+      - backend
     restart: always
     stdin_open: true
-    tty: true 
+    tty: true
+    volumes: 
+      - ../config/sz_setup_postgres.py:/sz_setup_postgres.py
+
+networks:
+  backend:
