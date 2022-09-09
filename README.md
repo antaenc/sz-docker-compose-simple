@@ -35,7 +35,7 @@ Run commands from within the yaml directory.
 
 Export the SENZING_ENGINE_CONFIGURATION_JSON env var on the host with the Senzing engine configuration, change <host_name_here> to the hosts host name:
 
-```export SENZING_ENGINE_CONFIGURATION_JSON='{"PIPELINE":{"CONFIGPATH":"/etc/opt/senzing","LICENSESTRINGBASE64":"","RESOURCEPATH":"/opt/senzing/g2/resources","SUPPORTPATH":"/opt/senzing/data"},"SQL":{"CONNECTION":"postgresql://senzing:password@<host_name_here>:5432:g2"}}'```
+```export SENZING_ENGINE_CONFIGURATION_JSON='{"PIPELINE":{"CONFIGPATH":"/etc/opt/senzing","LICENSESTRINGBASE64":"","RESOURCEPATH":"/opt/senzing/g2/resources","SUPPORTPATH":"/opt/senzing/data"},"SQL":{"CONNECTION":"postgresql://postgres:password@<host_name_here>:5432:g2"}}'```
 
 ### Postgres
 
@@ -45,12 +45,6 @@ Export the SENZING_ENGINE_CONFIGURATION_JSON env var on the host with the Senzin
 ### Senzing Tools - To add default Senzing configuration
 
 ```docker-compose -f docker-compose-tools.yaml up --detach```
-
-```docker exec -it -e SENZING_ENGINE_CONFIGURATION_JSON senzing-tools /bin/bash```
-
-```python3 sz_setup_postgres.py```
-
-```exit```
 
 ### RabbitMQ
 
