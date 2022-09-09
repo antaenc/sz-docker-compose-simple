@@ -1,7 +1,8 @@
-version: '3'
+version: '3.2'
 services:
 
   rabbitmq:
+    container_name: rabbitmq
     hostname: rabbitmq
     image: bitnami/rabbitmq
     ports:
