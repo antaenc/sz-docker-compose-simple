@@ -2,7 +2,7 @@
 
 Simple set of Docker Compose files to start a demonstrable and example Senzing stack using pre-built container images.
 
-This stack emulates many components of one type of Senzing  architectural deployment patterns: https://senzing.zendesk.com/hc/en-us/articles/360051562333-Senzing-Architectural-Pattern-for-Perpetual-Insights
+This stack emulates many components of one type of Senzing [architectural deployment pattern](https://senzing.zendesk.com/hc/en-us/articles/360051562333-Senzing-Architectural-Pattern-for-Perpetual-Insights).
 
 ## Prerequisites
 
@@ -15,13 +15,23 @@ This stack emulates many components of one type of Senzing  architectural deploy
 
 This demonstrator utilises a number of example Docker images available at https://github.com/Senzing.
 
+- [File Loader](https://github.com/Senzing/file-loader)
+- [Postgres Initialization](https://github.com/Senzing/init-postgresql)
+- [REST API Server](https://github.com/Senzing/senzing-api-server)
+- [Demo Web Application](https://github.com/Senzing/entity-search-web-app)
+
+Additional non-Senzing images used:
+
+- [PostgreSQL](https://hub.docker.com/_/postgres)
+- [Swagger-ui](https://hub.docker.com/r/swaggerapi/swagger-ui)
+
 ## Running
 
 When localhost is referenced below it is assumed all actions are on the same machine. If you deploy the assets on one machine and use a browser to access them, change localhost to the hostname of the machine running the assets.
 
 Run commands from within the yaml directory.
 
-Export the SENZING_ENGINE_CONFIGURATION_JSON env var on the host with the Senzing engine configuration, change <host_name_here> to the hosts host name:
+Export the SENZING_ENGINE_CONFIGURATION_JSON env var on the host with the Senzing engine configuration, change `<host_name_here>` to the hosts host name:
 
 ```console
 export SENZING_ENGINE_CONFIGURATION_JSON='{"PIPELINE":{"CONFIGPATH":"/etc/opt/senzing","LICENSESTRINGBASE64":"","RESOURCEPATH":"/opt/senzing/g2/resources","SUPPORTPATH":"/opt/senzing/data"},"SQL":{"CONNECTION":"postgresql://postgres:password@<host_name_here>:5432:g2"}}'
@@ -29,34 +39,46 @@ export SENZING_ENGINE_CONFIGURATION_JSON='{"PIPELINE":{"CONFIGPATH":"/etc/opt/se
 
 ### Postgres
 
-```docker-compose -f docker-compose-postgres.yaml up --detach```
+```console
+docker-compose -f docker-compose-postgres.yaml up --detach
+``` 
 
 
 ### Senzing Tools - To add default Senzing configuration
 
-```docker-compose -f docker-compose-tools.yaml up --detach```
+```console
+docker-compose -f docker-compose-tools.yaml up --detach
+```
 
 ### Senzing Loader 
 
-```docker-compose -f docker-compose-loader.yaml up --detach --scale senzing-loader=2```
-
-In the RabbitMQ console and the senzing queue, you should shortly see 5000 records removed from the queue as they are sent to Senzing for ingestion and entity resolution.
+```console
+docker-compose -f docker-compose-loader.yaml up --detach --scale senzing-loader=2
+```
 
 ### Senzing Redeor
 
-```docker-compose -f docker-compose-redoer.yaml up --detach```
+```console
+docker-compose -f docker-compose-redoer.yaml up --detach
+ ```
 
 ### Senzing REST API Server
 
-```docker-compose -f docker-compose-restserver.yaml up --detach```
+```console
+docker-compose -f docker-compose-restserver.yaml up --detach
+```
 
 Test the REST API Server by navigating to http://localhost:8250 or using curl:
 
-```curl -X GET http://localhost:8250/specifications/open-api```
+```console
+curl -X GET http://localhost:8250/specifications/open-api
+```
 
 ### Senzing Web App Demo
 
-```docker-compose -f docker-compose-webapp.yaml up --detach```
+```console
+docker-compose -f docker-compose-webapp.yaml up --detach
+```
 
 Navigate to http://localhost:8251, search for 'RIOS BARBARA'
 
@@ -64,12 +86,18 @@ Navigate to http://localhost:8251, search for 'RIOS BARBARA'
 
 Run curl to fetch the API specification from the Senzing REST API Server, taking note to use the port from above:
 
-```curl -X GET http://localhost:<port_from_above>/specifications/open-api -o /tmp/apispec.json```
+```console
+curl -X GET http://localhost:<port_from_above>/specifications/open-api -o /tmp/apispec.json
+```
 
 This step uses a utility to extract the section from the specification required for Swagger, you may have to install this, e.g., on Debian 'sudo apt install jq'.
 
-```curl -X GET http://localhost:8250/specifications/open-api | jq -c '.data' > ../data/rest_api_spec.json```
+```console
+curl -X GET http://localhost:8250/specifications/open-api | jq -c '.data' > ../data/rest_api_spec.json
+```
 
-```docker-compose -f docker-compose-swagger.yaml up --detach```
+```console
+docker-compose -f docker-compose-swagger.yaml up --detach
+```
 
 Launch the Swagger UI console at: http://localhost:9180/
